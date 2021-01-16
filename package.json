@@ -1,0 +1,18 @@
+{
+  "name": "ts-basics",
+  "version": "1.0.0",
+  "description": "TypeScript exercise 9.1-9.7",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "calculateBmi": "ts-node bmiCalculator.ts",
+    "calculateExercises": "ts-node exerciseCalculator.ts"
+  },
+  "author": "Yurong Zhao",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^14.14.21",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.1.3"
+  }
+}
