@@ -12,22 +12,20 @@ interface dailyExerciseValues {
 	value2: number;
 }
 
-const parseExerciseArguments = (args: Array<string>): dailyExerciseValues => {
-	if (args.length < 4) throw new Error('Not enough arguments');
-	const exerciseHrsArray = args.slice(2, args.length).map(arg => Number(arg));
-	if (exerciseHrsArray.every(h => !isNaN(h))) {
+export const parseExerciseArguments = (value1: Array<number>, value2: number): dailyExerciseValues => {
+	if (!value1 || !value2) throw new Error('parameters missing');
+	if (Array.isArray(value1) && typeof value2 === "number") {
 	  return {
-		value1: exerciseHrsArray.slice(1, exerciseHrsArray.length),
-		value2: exerciseHrsArray[0]
+		value1,
+		value2
 	  }
 	} else {
-	  throw new Error('Provided values were not numbers!');
+	  throw new Error('malformatted parameters');
 	}
 }
 
-const calculateExercises = (a: Array<number>, b: number): void => {
+export const calculateExercises = (a: Array<number>, b: number): Result => {
 	const periodLength = a.length;
-
 	const average = a.reduce((b, c) => b + c, 0) / periodLength;
 	const rank = ()=> {
 		if(average < b) {
@@ -48,7 +46,7 @@ const calculateExercises = (a: Array<number>, b: number): void => {
 		}
 	}
 
-	const exerciseResult = {
+	return {
 		periodLength: periodLength,
 		trainingDays: a.filter(h => h > 0).length,
 		success: average > b,
@@ -57,14 +55,4 @@ const calculateExercises = (a: Array<number>, b: number): void => {
 		target: b,
 		average: average
 	}
-	console.log(exerciseResult);
-}
-
-// calculateExercises([3, 0, 2, 4.5, 0, 3, 1], 2);
-
-try {
-	const { value1, value2 } = parseExerciseArguments(process.argv);
-	calculateExercises(value1, value2);
-} catch (e) {
-	console.log('Error, something bad happened, message: ', e.message);
 }
